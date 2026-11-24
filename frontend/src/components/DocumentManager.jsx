@@ -4,7 +4,13 @@ import DocumentForm from './DocumentForm'
 import StatusMessage from './StatusMessage'
 import { createDocument, deleteDocument, getDocument, listDocuments, updateDocument } from '../services/api'
 
-function DocumentManager() {
+function formatUpdatedDate(value) {
+  if (!value) return 'Date unavailable'
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? 'Date unavailable' : `Updated ${date.toLocaleDateString()}`
+}
+
+function DocumentManager({ categoryFilter = '' }) {
   const [documents, setDocuments] = useState([])
   const [selected, setSelected] = useState(null)
   const [editing, setEditing] = useState(null)
@@ -74,12 +80,16 @@ function DocumentManager() {
     }
   }
 
+  const visibleDocuments = categoryFilter
+    ? documents.filter((document) => document.category === categoryFilter)
+    : documents
+
   return (
     <section className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="eyebrow">Knowledge library</p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">Manage documents</h2>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">{categoryFilter || 'All documents'}</h2>
           <p className="mt-2 text-sm text-slate-500">Create, review, update, and remove the documents your team searches.</p>
         </div>
         <button type="button" onClick={() => { setEditing(null); setShowForm(true) }} className="button-primary">+ New document</button>
@@ -99,20 +109,20 @@ function DocumentManager() {
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
             <div>
               <p className="font-semibold text-slate-900">All documents</p>
-              <p className="mt-1 text-xs text-slate-400">{documents.length} documents in your library</p>
+              <p className="mt-1 text-xs text-slate-400">{visibleDocuments.length} documents in this view</p>
             </div>
             <button type="button" onClick={loadDocuments} className="text-xs font-semibold text-blue-600 hover:text-blue-800">Refresh</button>
           </div>
-          {loading ? <div className="p-8"><StatusMessage type="loading">Loading your library...</StatusMessage></div> : documents.length === 0 ? <p className="p-8 text-center text-sm text-slate-500">No documents yet. Create your first one.</p> : (
+          {loading ? <div className="p-8"><StatusMessage type="loading">Loading your library...</StatusMessage></div> : visibleDocuments.length === 0 ? <p className="p-8 text-center text-sm text-slate-500">{categoryFilter ? 'No documents in this collection.' : 'No documents yet. Create your first one.'}</p> : (
             <div className="divide-y divide-slate-100">
-              {documents.map((document) => {
+              {visibleDocuments.map((document) => {
                 const id = document._id || document.id
                 const active = (selected?._id || selected?.id) === id
                 return (
                   <button type="button" key={id} onClick={() => openDocument(id)} className={`flex w-full items-start justify-between gap-4 px-5 py-4 text-left transition hover:bg-blue-50/50 ${active ? 'bg-blue-50' : ''}`}>
                     <span className="min-w-0">
                       <span className="block truncate text-sm font-semibold text-slate-900">{document.name}</span>
-                      <span className="mt-1 block text-xs text-slate-500">{document.category}</span>
+                      <span className="mt-1 block text-xs text-slate-500">{document.category} · {formatUpdatedDate(document.updated_at)}</span>
                     </span>
                     <span className="shrink-0 text-xs font-medium text-slate-400">Open →</span>
                   </button>

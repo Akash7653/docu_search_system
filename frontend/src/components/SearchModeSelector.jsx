@@ -13,7 +13,7 @@ const modes = [
 
 function SearchModeSelector({ mode, onChange }) {
   return (
-    <div className="grid gap-2 md:grid-cols-2 md:gap-3" role="radiogroup" aria-label="Search mode">
+    <div className="workspace-mode-selector" role="radiogroup" aria-label="Search mode">
       {modes.map((option) => {
         const selected = mode === option.id
         return (
@@ -23,10 +23,10 @@ function SearchModeSelector({ mode, onChange }) {
             role="radio"
             aria-checked={selected}
             onClick={() => onChange(option.id)}
-            className={`rounded-xl border p-4 text-left transition ${
+            className={`workspace-mode-option ${
               selected
-                ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-100'
-                : 'border-slate-200 bg-white hover:border-slate-300'
+                ? 'workspace-mode-option-active'
+                : ''
             }`}
           >
             <span className="block text-sm font-semibold text-slate-900">
