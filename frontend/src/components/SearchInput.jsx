@@ -42,7 +42,7 @@ function SearchInput({
       <button
         type="button"
         disabled={loading}
-        onClick={onSubmit}
+        onClick={() => onSubmit()}
         className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
       >
         {loading ? 'Searching...' : 'Search'}
