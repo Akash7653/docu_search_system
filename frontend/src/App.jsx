@@ -184,7 +184,7 @@ function App() {
           </div>
         </header>
 
-        <main className="mx-auto max-w-[1440px] px-4 pb-12 pt-6 sm:px-6 md:pt-8 lg:px-8 lg:pb-16 lg:pt-10">
+        <main className="mx-auto max-w-[1440px] px-4 pb-28 pt-6 sm:px-6 sm:pb-12 md:pt-8 lg:px-8 lg:pb-16 lg:pt-10">
           {view === 'documents' ? (
             <DocumentManager />
           ) : (
@@ -242,8 +242,19 @@ function App() {
             </>
           )}
         </main>
-        <footer className="mx-auto max-w-[1440px] px-4 pb-8 text-center text-xs text-slate-400 sm:px-6 lg:px-8">DocuFind · Explainable document retrieval for project knowledge</footer>
+        <footer className="mx-auto max-w-[1440px] px-4 pb-24 text-center text-xs text-slate-400 sm:px-6 sm:pb-8 lg:px-8">DocuFind · Explainable document retrieval for project knowledge</footer>
       </div>
+
+      <nav className="mobile-bottom-nav xl:hidden" aria-label="Quick navigation">
+        <button type="button" onClick={() => navigate('search')} className={`mobile-bottom-item ${view === 'search' ? 'mobile-bottom-item-active' : ''}`} aria-current={view === 'search' ? 'page' : undefined}>
+          <NavigationIcon name="search" />
+          <span>Search</span>
+        </button>
+        <button type="button" onClick={() => navigate('documents')} className={`mobile-bottom-item ${view === 'documents' ? 'mobile-bottom-item-active' : ''}`} aria-current={view === 'documents' ? 'page' : undefined}>
+          <NavigationIcon name="documents" />
+          <span>Documents</span>
+        </button>
+      </nav>
 
       {mobileMenuOpen && (
         <div className="mobile-menu-layer" role="dialog" aria-modal="true" aria-label="Navigation menu">
