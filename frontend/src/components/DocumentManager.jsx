@@ -97,7 +97,7 @@ function DocumentManager() {
           <DocumentForm key={editing ? (editing._id || editing.id) : 'new'} document={editing} loading={saving} onCancel={() => { setShowForm(false); setEditing(null) }} onSubmit={handleSave} />
         </div>
       )}
-      <div className="grid gap-6 md:grid-cols-[minmax(0,1.05fr)_minmax(260px,0.95fr)] lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
         <div className="panel overflow-hidden">
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
             <div>

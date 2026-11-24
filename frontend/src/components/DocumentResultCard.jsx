@@ -2,17 +2,17 @@ function DocumentResultCard({ result, index }) {
   const score = `${(result.relevance_score * 100).toFixed(1)}%`
 
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <article className="min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
             Result {index + 1}
           </p>
-          <h3 className="mt-1 text-lg font-semibold text-slate-900">
+          <h3 className="mt-1 break-words text-lg font-semibold text-slate-900">
             {result.name}
           </h3>
         </div>
-        <div className="rounded-lg bg-blue-50 px-3 py-2 text-left sm:text-right">
+        <div className="w-full rounded-lg bg-blue-50 px-3 py-2 text-left sm:w-auto sm:text-right">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-600">
             Relevance score
           </p>
@@ -32,7 +32,7 @@ function DocumentResultCard({ result, index }) {
           </span>
         ))}
       </div>
-      <p className="mt-4 leading-7 text-slate-600">{result.short_description}</p>
+      <p className="mt-4 break-words leading-7 text-slate-600">{result.short_description}</p>
     </article>
   )
 }

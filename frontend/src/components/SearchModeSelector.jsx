@@ -13,7 +13,7 @@ const modes = [
 
 function SearchModeSelector({ mode, onChange }) {
   return (
-    <div className="grid gap-3 sm:grid-cols-2" role="radiogroup" aria-label="Search mode">
+    <div className="grid gap-2 md:grid-cols-2 md:gap-3" role="radiogroup" aria-label="Search mode">
       {modes.map((option) => {
         const selected = mode === option.id
         return (
