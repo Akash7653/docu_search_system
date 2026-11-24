@@ -1,4 +1,3 @@
-/* oxlint-disable react(set-state-in-effect) */
 import { useEffect, useState } from 'react'
 
 import DocumentForm from './DocumentForm'
@@ -15,8 +14,6 @@ function DocumentManager() {
   const [error, setError] = useState('')
 
   const loadDocuments = async () => {
-    // This state transition belongs to the initial library fetch.
-    // oxlint-disable-next-line react(set-state-in-effect)
     setLoading(true)
     setError('')
     try {

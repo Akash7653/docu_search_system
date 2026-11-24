@@ -43,7 +43,6 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [history, setHistory] = useState([])
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const menuButtonRef = useRef(null)
   const closeButtonRef = useRef(null)
 
   useEffect(() => {
@@ -171,7 +170,6 @@ function App() {
                 Local workspace
               </div>
               <button
-                ref={menuButtonRef}
                 type="button"
                 onClick={() => setMobileMenuOpen(true)}
                 aria-label="Open navigation menu"

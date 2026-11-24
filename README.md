@@ -107,6 +107,7 @@ document-search-system/
 │   └── .env.example
 ├── sample_data/
 │   └── documents.py
+├── .python-version
 ├── README.md
 └── .gitignore
 ```
@@ -169,6 +170,35 @@ npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
 Open http://127.0.0.1:5173.
+
+## Production deployment
+
+The current deployment uses Vercel for the React frontend, Render for the
+FastAPI backend, and MongoDB Atlas for persistence:
+
+- Frontend: https://frontend-alpha-bay-lr2jg625qe.vercel.app/
+- Backend: https://docu-search-system.onrender.com
+- API documentation: https://docu-search-system.onrender.com/docs
+
+For Render, use `backend` as the service root directory and configure:
+
+```bash
+pip install -r requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+The root `.python-version` file pins the Render runtime to Python 3.11.11.
+Set these Render environment variables without committing their values:
+
+```env
+MONGODB_URI=<MongoDB Atlas connection string>
+MONGODB_DATABASE=document_search_db
+CORS_ORIGINS=https://frontend-alpha-bay-lr2jg625qe.vercel.app,http://localhost:5173,http://127.0.0.1:5173
+```
+
+For Vercel, set `VITE_API_BASE_URL` to the Render backend URL for the
+Production and Preview environments. Render's free service may sleep when
+idle, so the first request after inactivity can take longer.
 
 ## Sample data
 
@@ -305,11 +335,11 @@ Response fields include both the original and processed query:
   "results": [
     {
       "id": "document_id",
-      "name": "Database Fundamentals",
-      "category": "Database",
-      "short_description": "A practical introduction to relational database concepts.",
-      "relevance_score": 0.568455,
-      "matched_fields": ["name", "category", "description", "content"]
+      "name": "React Component Architecture",
+      "category": "Frontend Development",
+      "short_description": "A guide to organizing reusable React components for web applications.",
+      "relevance_score": 0.628,
+      "matched_fields": ["name", "description", "content"]
     }
   ]
 }
@@ -408,17 +438,15 @@ No hidden seed step or automatic startup data mutation is required.
 - The full document corpus is loaded into memory for every search.
 - Common words can create incidental secondary matches.
 - No automated frontend test framework is configured.
-- No production authentication, authorization, deployment, or monitoring.
+- No production authentication, authorization, or monitoring.
 - The application is not designed for very large document collections.
 
 ## Future improvements
 
 - Add a persistent search index or cached corpus for larger datasets.
 - Add stemming, synonyms, or an optional semantic retrieval layer.
-- Add document detail and CRUD screens to the React interface.
 - Add automated frontend component and integration tests.
-- Add authentication, authorization, production observability, and deployment
-  configuration.
+- Add authentication, authorization, and production observability.
 
 ## Submission checklist
 
@@ -431,4 +459,5 @@ No hidden seed step or automatic startup data mutation is required.
 - [x] React keyword and natural-language search interface.
 - [x] Loading, empty, and error states.
 - [x] Environment-based configuration without frontend database credentials.
+- [x] Render backend and Vercel frontend deployment configuration.
 - [x] Backend tests, frontend build, and frontend lint verification.
