@@ -20,8 +20,6 @@ The sample dataset contains fictional technical documents only.
 - Rule-based natural-language query preprocessing.
 - React knowledge workspace with keyword and natural-language modes, search
   history, quick examples, and document CRUD views.
-- Notion-inspired page layout with functional collections, persisted light/dark
-  theme preference, and document-focused result blocks.
 - Responsive desktop sidebar, tablet navigation, and an accessible mobile
   navigation drawer.
 - Loading, empty, validation, and backend-error states.
